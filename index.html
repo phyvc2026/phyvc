@@ -24,8 +24,8 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
 
-    section.abstract { max-width: 720px; margin: 48px auto 48px; padding: 0 24px; }
-    .abstract .section-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    section.abstract { max-width: 1100px; margin: 48px auto 48px; padding: 0 24px; text-align: center; }
+    .abstract .section-title { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0px; }
     .abstract p.body { color: var(--muted); font-size: 0.92rem; border-left: 3px solid var(--accent); padding-left: 18px; }
 
     .section-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
@@ -40,17 +40,17 @@
 
     .audio-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
     .audio-table thead tr { background: var(--tag-bg); }
-    .audio-table th { font-family: 'DM Mono', monospace; font-size: 10.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); padding: 12px 14px; text-align: center; border-bottom: 1.5px solid var(--border); }
+    .audio-table th { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); padding: 12px 14px; text-align: center; border-bottom: 1.5px solid var(--border); }
     .audio-table th:first-child { text-align: left; }
 
     /* source cell spans 2 rows */
-    td.src-cell { padding: 12px 14px; vertical-align: middle; border-bottom: 1.5px solid var(--border); border-right: 1px solid var(--border); }
+    .audio-table td.src-cell { padding: 12px 14px; vertical-align: middle; border-bottom: none; border-right: 1px solid var(--border); }
+    .audio-table tr.pair-bottom td { border-bottom: none; }
     .audio-table td { padding: 10px 12px; vertical-align: middle; border-bottom: 1px solid var(--border); text-align: center; }
-    .audio-table tr.pair-bottom td { border-bottom: 1.5px solid var(--border); }
     .audio-table tbody tr:last-child td { border-bottom: none; }
     .audio-table tr:hover td { background: #faf9f7; }
 
-    .tgt-cell { width: 88px; min-width: 80px; text-align: center !important; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .07em; font-weight: 600; border-right: 1px solid var(--border); }
+    .tgt-cell { width: 88px; min-width: 80px; text-align: center !important; font-family: 'DM Mono', monospace; font-size: 15px; letter-spacing: .0em; font-weight: 600; border-right: 1px solid var(--border); }
     .tgt-cell.female { background: var(--female-bg); color: var(--female-text); }
     .tgt-cell.male   { background: var(--male-bg);   color: var(--male-text); }
 
@@ -58,7 +58,7 @@
     .sample-meta  { font-size: 0.75rem; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 2px; }
     .disfluency-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: .05em; padding: 1px 7px; border-radius: 4px; background: var(--tag-bg); color: var(--muted); margin-top: 5px; }
 
-    .model-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: .05em; padding: 2px 7px; border-radius: 4px; margin-bottom: 4px; background: var(--tag-bg); color: var(--muted); }
+    .model-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: .05em; padding: 2px 7px; border-radius: 4px; margin-bottom: 4px; background: var(--tag-bg); color: var(--muted); }
     .model-badge.ours { background: var(--accent-light); color: var(--accent); border: 1px solid #b9d8c4; font-weight: 600; }
 
     audio { width: 100%; min-width: 140px; max-width: 190px; height: 34px; accent-color: var(--accent); display: block; margin: 0 auto; }
@@ -81,11 +81,11 @@
 <body>
 
 <section class="abstract">
-  <p class="section-title">Abstract</p>
+  <p class="section-title">Paper-Id: 378 </p>
   <p style="height:8px"></p>
-  <p class="body">
-    We present Phy-VC, a physics-informed voice conversion framework that leverages Webster's horn equation to model vocal tract acoustics. Phy-VC anonymizes speaker identity — converting each source to both female and male target voices — while faithfully preserving clinically diagnostic markers: disfluencies in stuttering, pause patterns in dementia, and prosodic degradations in elderly speech.
-  </p>
+  <h1 style="font-family:'DM Serif Display',serif; font-size:clamp(1.4rem,3vw,2.2rem); line-height:1.2; color:var(--text); margin-top:10px; text-align:center;">
+    <span style="color:var(--accent)">Phy-VC:</span> Physics-Informed Voice Conversion for Privacy-Preserving Pathological Speech
+  </h1>
 </section>
 
 <hr class="divider"/>
@@ -98,7 +98,7 @@
 <div class="samples-wrap">
   <p class="section-title">Experiment 01</p>
   <h2>Stuttering Speech</h2>
-  <p class="section-desc">SEP-28k dataset &nbsp;·&nbsp; Each source utterance is anonymized to a female and a male voice. Disfluencies should be preserved in both conversions.</p>
+  <p class="section-desc">SEP-28k dataset &nbsp;·&nbsp; Each source utterance is anonymised to a female and a male voice. Dysfluencies should be preserved in both conversions.</p>
   <div class="tabs">
     <button class="tab active" onclick="filterTable('stutter','all',this)">All</button>
     <button class="tab" onclick="filterTable('stutter','srep',this)">Sound Rep.</button>
@@ -177,6 +177,29 @@
   </table>
 </div>
 
+<!-- ══════════════════════════════════════
+  SECTION 4 · SD
+  Path: final_files/sd/{n}_{src}_{tgt}_{model}.wav
+══════════════════════════════════════ -->
+<div class="samples-wrap">
+  <p class="section-title">Experiment 04</p>
+  <h2>Standard Speech (not Elderly or Pathological)</h2>
+  <p class="section-desc">Healthy young speakers (standard dataset) &nbsp;·&nbsp; No pathology should be introduced.</p>
+  <table class="audio-table" id="table-sd">
+    <thead>
+      <tr>
+        <th style="text-align:left">Sample</th>
+        <th>Source</th>
+        <th><span class="model-badge">kNN-VC</span></th>
+        <th><span class="model-badge">Emo-StarGAN</span></th>
+        <th><span class="model-badge">DDSP-QbE</span></th>
+        <th><span class="model-badge ours">Phy-VC (Ours)</span></th>
+      </tr>
+    </thead>
+    <tbody id="tbody-sd"></tbody>
+  </table>
+</div>
+
 <hr class="divider"/>
 
 <!-- Architecture -->
@@ -187,13 +210,13 @@
   <div class="fig-card">
     <div class="fig-placeholder">[ Replace with system_diagram.png ]</div>
     <p class="fig-caption">
-      <strong>Figure 1.</strong> Phy-VC pipeline: WavLM content encoder → CNN preprocessing → Transformer → Webster's equation surrogate (FormantNet) → DDSP vocoder with PolyBLEP anti-aliasing → anonymized output preserving clinical acoustic markers.
+      <strong>Figure 1.</strong> Phy-VC pipeline: WavLM content encoder → CNN preprocessing → Transformer → Webster's equation surrogate (FormantNet) → DDSP vocoder with PolyBLEP anti-aliasing → anonymised output preserving clinical acoustic markers.
     </p>
   </div>
 </div>
 
 <footer>
-  Phy-VC &nbsp;·&nbsp; Interspeech 2026 &nbsp;·&nbsp; Audio samples anonymized for blind review. &nbsp;|&nbsp; Page built with plain HTML.
+  Phy-VC &nbsp;·&nbsp; Interspeech 2026 &nbsp;·&nbsp; Audio samples anonymised for blind review.
 </footer>
 
 <script>
@@ -230,10 +253,10 @@ const STUTTER_SAMPLES = [
     { n:3, src:'M', type:'block',       label:'Block',       meta:'M · sample 3' },
     { n:4, src:'M', type:'block',       label:'Block',       meta:'M · sample 4' },
   // — Filler —
-  { n:1, src:'M', type:'filler',label:'Interjection',meta:'M · sample 1' },
-  { n:2, src:'M', type:'filler',label:'Interjection',meta:'M · sample 2' },
-    { n:3, src:'F', type:'filler',label:'Interjection',meta:'F · sample 3' },
-  { n:4, src:'F', type:'filler',label:'Interjection',meta:'F · sample 4' },
+  { n:1, src:'M', type:'filler',label:'Interjection/Filler',meta:'M · sample 1' },
+  { n:2, src:'M', type:'filler',label:'Interjection/Filler',meta:'M · sample 2' },
+    { n:3, src:'F', type:'filler',label:'Interjection/Filler',meta:'F · sample 3' },
+  { n:4, src:'F', type:'filler',label:'Interjection/Filler',meta:'F · sample 4' },
 ];
 
 const DEMENTIA_SAMPLES = [
@@ -248,6 +271,13 @@ const ELDERLY_SAMPLES = [
   { n:2, src:'F', type:'healthy', label:'Healthy elderly', meta:'F · sample 2' },
   { n:3, src:'M', type:'healthy', label:'Healthy elderly', meta:'M · sample 3' },
   { n:4, src:'M', type:'healthy', label:'Healthy elderly', meta:'M · sample 4' },
+];
+
+const SD_SAMPLES = [
+  { n:1, src:'F', type:'healthy', label:'Healthy young (SD)', meta:'F · sample 1' },
+  { n:2, src:'F', type:'healthy', label:'Healthy young (SD)', meta:'F · sample 2' },
+  { n:3, src:'M', type:'healthy', label:'Healthy young (SD)', meta:'M · sample 3' },
+  { n:4, src:'M', type:'healthy', label:'Healthy young (SD)', meta:'M · sample 4' },
 ];
 
 // ═══════════════════════════════════════════
@@ -266,6 +296,11 @@ const paths = {
   elderly(n, src, tgt, model) {
     if (model === 'original') return `final_files/elderly/healthy/${n}_original.wav`;
     return `final_files/elderly/healthy/${n}_${src}_${tgt}_${model}.wav`;
+  },
+
+    standardds(n, src, tgt, model) {
+    if (model === 'original') return `final_files/sd/${n}_original.wav`;
+    return `final_files/sd/${n}_${src}_${tgt}_${model}.wav`;
   },
 };
 
@@ -286,10 +321,10 @@ function au(src) {
  */
 function renderPair(s, pfn) {
   const srcAudio = au(pfn(s.n, s.src, null, 'original'));
-
+  const srcIcon = s.src === 'F' ? 'F' : 'M';
   const rows = [
-    { tgtCode:'F', cls:'female', icon:'♀', label:'→ Female', pairClass:'' },
-    { tgtCode:'M', cls:'male',   icon:'♂', label:'→ Male',   pairClass:'pair-bottom' },
+    { tgtCode:'F', cls:'female', icon:`${srcIcon} → F`, pairClass:'' },
+    { tgtCode:'M', cls:'male',   icon:`${srcIcon} → M`, pairClass:'pair-bottom' },
   ];
 
   return rows.map((r, i) => {
@@ -308,10 +343,10 @@ function renderPair(s, pfn) {
 
     return `<tr data-tag="${s.type}" class="${r.pairClass}">
   ${srcCell}
-  <td class="tgt-cell ${r.cls}">${r.icon} ${r.label}</td>
+  <td class="tgt-cell ${r.cls}">${r.icon}</td>
   ${modelCells}
 </tr>`;
-  }).join('\n');
+  }).join('\n') + `\n<tr class="spacer-row" data-tag="${s.type}"><td colspan="6" style="height:10px; background:var(--bg); border:none; padding:0;"></td></tr>`;
 }
 
 function renderTable(tbodyId, samples, pfn) {
@@ -323,6 +358,7 @@ function renderTable(tbodyId, samples, pfn) {
 renderTable('tbody-stutter',  STUTTER_SAMPLES,  (n,src,tgt,m) => paths.stutter(n,src,tgt,m, STUTTER_SAMPLES.find(s=>s.n===n&&s.src===src)?.type));
 renderTable('tbody-dementia', DEMENTIA_SAMPLES, (n,src,tgt,m) => paths.dementia(n,src,tgt,m, DEMENTIA_SAMPLES.find(s=>s.n===n&&s.src===src)?.type));
 renderTable('tbody-elderly',  ELDERLY_SAMPLES,  (n,src,tgt,m) => paths.elderly(n,src,tgt,m));
+renderTable('tbody-sd',  SD_SAMPLES,  (n,src,tgt,m) => paths.standardds(n,src,tgt,m));
 
 // The above "find" approach fails when same n appears in different types.
 // Re-render with proper closure instead:
@@ -339,6 +375,11 @@ document.getElementById('tbody-dementia').innerHTML =
 document.getElementById('tbody-elderly').innerHTML =
   ELDERLY_SAMPLES.map(s => renderPair(s,
     (n,src,tgt,m) => paths.elderly(n,src,tgt,m)
+  )).join('\n');
+
+document.getElementById('tbody-sd').innerHTML =
+  SD_SAMPLES.map(s => renderPair(s,
+    (n,src,tgt,m) => paths.standardds(n,src,tgt,m)
   )).join('\n');
 
 // ── tab filter ──
