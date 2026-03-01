@@ -12,8 +12,8 @@
       --border: #ddd8d0;
       --text: #1a1814;
       --muted: #7a746b;
-       --accent: #8B3A2F;
-        --accent-light: #f5e8e6;
+      --accent: #8B3A2F;
+      --accent-light: #f5e8e6;
       --tag-bg: #eae6e0;
       --female-bg: #fff0f6;
       --female-text: #8b3a5a;
@@ -43,7 +43,6 @@
     .audio-table th { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); padding: 12px 14px; text-align: center; border-bottom: 1.5px solid var(--border); }
     .audio-table th:first-child { text-align: left; }
 
-    /* source cell spans 2 rows */
     .audio-table td.src-cell { padding: 12px 14px; vertical-align: middle; border-bottom: none; border-right: 1px solid var(--border); }
     .audio-table tr.pair-bottom td { border-bottom: none; }
     .audio-table td { padding: 10px 12px; vertical-align: middle; border-bottom: 1px solid var(--border); text-align: center; }
@@ -61,32 +60,44 @@
     .model-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: .05em; padding: 2px 7px; border-radius: 4px; margin-bottom: 4px; background: var(--tag-bg); color: var(--muted); }
     .model-badge.ours { background: var(--accent-light); color: var(--accent); border: 1px solid #d4a099; font-weight: 600; }
 
+    /* VTL-specific: scale factor badge */
+    .vtl-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: .04em; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; background: var(--tag-bg); color: var(--text); }
+    .vtl-badge.neutral { background: var(--accent-light); color: var(--accent); border: 1px solid #d4a099; }
+
+    /* Interpolation ratio badge */
+    .ratio-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; background: var(--tag-bg); color: var(--text); }
+    .ratio-badge.mid { background: var(--accent-light); color: var(--accent); border: 1px solid #d4a099; }
+
+    /* Speaker info card for interpolation */
+    .spk-info { display: flex; gap: 16px; margin-bottom: 20px; }
+    .spk-card { flex: 1; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px 18px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
+    .spk-card strong { display: block; font-size: 13px; color: var(--text); margin-bottom: 4px; }
+
     audio { width: 100%; min-width: 140px; max-width: 190px; height: 34px; accent-color: var(--accent); display: block; margin: 0 auto; }
 
     .divider { border: none; border-top: 1.5px solid var(--border); margin: 0 24px 64px; }
 
-    .fig-wrap { max-width: 860px; margin: 0 auto 80px; padding: 0 24px; }
-    .fig-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 32px; text-align: center; }
-    .fig-placeholder { width: 100%; height: 200px; background: var(--tag-bg); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: .06em; margin-bottom: 14px; }
-    .fig-caption { font-size: 0.8rem; color: var(--muted); }
-
-    .section-tabs { display: flex; gap: 10px; max-width: 1160px; margin: 0 auto 32px; padding: 0 24px; }
+    .section-tabs { display: flex; gap: 10px; max-width: 1160px; margin: 0 auto 32px; padding: 0 24px; flex-wrap: wrap; }
     .section-tab { font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: .06em; padding: 8px 24px; border-radius: 6px; border: 1.5px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; transition: all .15s; }
     .section-tab:hover { border-color: var(--accent); color: var(--accent); }
     .section-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    /* VTL tab visually distinct */
+    .section-tab.physics { border-style: dashed; }
+    .section-tab.physics.active { border-style: solid; }
 
     footer { border-top: 1.5px solid var(--border); max-width: 860px; margin: 0 auto; padding: 28px 24px 56px; text-align: center; font-family: 'DM Mono', monospace; font-size: 10.5px; color: var(--muted); letter-spacing: .04em; }
 
     @media (max-width: 700px) {
       .audio-table th, .audio-table td { padding: 8px 7px; }
       audio { min-width: 100px; max-width: 140px; }
+      .spk-info { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
 <section class="abstract">
-  <p class="section-title">Paper-Id: 378 </p>
+  <p class="section-title">Paper-Id: 378</p>
   <p style="height:8px"></p>
   <h1 style="font-family:'DM Serif Display',serif; font-size:clamp(1.4rem,3vw,2.2rem); line-height:1.2; color:var(--text); margin-top:10px; text-align:center;">
     <span style="color:var(--accent)">Phy-VC:</span> Physics-Informed Voice Conversion for Privacy-Preserving Pathological Speech
@@ -102,19 +113,18 @@
   <button class="section-tab active" onclick="showSection('stutter', this)">Stuttering</button>
   <button class="section-tab" onclick="showSection('elderly', this)">Elderly</button>
   <button class="section-tab" onclick="showSection('sd', this)">Standard Dataset (SD)</button>
+  <button class="section-tab physics" onclick="showSection('vtl', this)">Physics Control (VTL)</button>
 </div>
 
 <!-- ══════════════════════════════════════
-  SECTION 1 · Stuttering (SEP-28k)
-  Path: final_files/stuttering/{type}/{n}_{src}_{tgt}_{model}.wav
-        final_files/stuttering/{type}/{n}_original.wav
+  SECTION 1 · Stuttering
 ══════════════════════════════════════ -->
 <div class="samples-wrap" id="section-stutter">
   <p class="section-title">Experiment 01</p>
   <h2>Stuttering Speech</h2>
-  <p class="section-desc">From SEP-28k and FluencyBank datasets &nbsp;·&nbsp; Each source utterance is anonymised to a female and a male voice &nbsp;·&nbsp; Dysfluencies and its severity should be preserved.</p>
+  <p class="section-desc">From SEP-28k and FluencyBank datasets &nbsp;·&nbsp; Each source utterance is anonymised to a female and a male voice &nbsp;·&nbsp; Dysfluencies and their severity should be preserved.</p>
   <p class="section-desc">Select a condition below.</p>
-    <div class="tabs">
+  <div class="tabs">
     <button class="tab active" onclick="filterTable('stutter','all',this)">All</button>
     <button class="tab" onclick="filterTable('stutter','srep',this)">Sound Rep.</button>
     <button class="tab" onclick="filterTable('stutter','wrep',this)">Word Rep.</button>
@@ -137,23 +147,17 @@
   </table>
 </div>
 
-<!--<hr class="divider"/>-->
-
 <!-- ══════════════════════════════════════
-  SECTION 2 · Dementia (ADReSSo)
-  Path: final_files/elderly/dementia/{mild|severe}/{n}_{src}_{tgt}_{model}.wav
+  SECTION 2 · Elderly
 ══════════════════════════════════════ -->
 <div class="samples-wrap" id="section-elderly">
   <p class="section-title">Experiment 02</p>
   <h2>Elderly Speech</h2>
   <p class="section-desc">Select a condition below.</p>
-
   <div class="tabs" style="margin-bottom:12px;">
     <button class="tab active" onclick="showElderlySubset('dementia', this)">Dementia</button>
     <button class="tab" onclick="showElderlySubset('healthy', this)">Healthy Elderly</button>
   </div>
-
-  <!-- Dementia sub-panel -->
   <div id="elderly-sub-dementia">
     <p class="section-desc">From ADReSSo dataset &nbsp;·&nbsp; Vocal tremor, reduced articulatory precision, and dysfluencies should be preserved.</p>
     <div class="tabs">
@@ -175,10 +179,8 @@
       <tbody id="tbody-dementia"></tbody>
     </table>
   </div>
-
-  <!-- Healthy elderly sub-panel -->
   <div id="elderly-sub-healthy" style="display:none">
-      <p class="section-desc">From ADReSSo dataset &nbsp;·&nbsp; Healthy elderly speakers</p>
+    <p class="section-desc">From ADReSSo dataset &nbsp;·&nbsp; Healthy elderly speakers &nbsp;·&nbsp; Vocal tremor and reduced articulatory precision should be preserved.</p>
     <table class="audio-table" id="table-elderly">
       <thead>
         <tr>
@@ -194,17 +196,9 @@
     </table>
   </div>
 </div>
-<!--<hr class="divider"/>-->
 
 <!-- ══════════════════════════════════════
-  SECTION 3 · Elderly
-  Path: final_files/elderly/healthy/{n}_{src}_{tgt}_{model}.wav
-══════════════════════════════════════ -->
-
-
-<!-- ══════════════════════════════════════
-  SECTION 4 · SD
-  Path: final_files/sd/{n}_{src}_{tgt}_{model}.wav
+  SECTION 3 · SD
 ══════════════════════════════════════ -->
 <div class="samples-wrap" id="section-sd">
   <p class="section-title">Experiment 03</p>
@@ -225,20 +219,83 @@
   </table>
 </div>
 
-<!--<hr class="divider"/>-->
+<!-- ══════════════════════════════════════
+  SECTION 4 · Physics Control (VTL)
+══════════════════════════════════════ -->
+<div class="samples-wrap" id="section-vtl">
+  <p class="section-title">Physics Control</p>
+  <h2>Vocal Tract Length Analysis</h2>
+  <p class="section-desc">Demonstrating explicit physical control via Webster's equation &nbsp;·&nbsp; Select an experiment below.</p>
 
-<!--&lt;!&ndash; Architecture &ndash;&gt;-->
-<!--<div class="fig-wrap">-->
-<!--  <p class="section-title">System Overview</p>-->
-<!--  <h2>Architecture</h2>-->
-<!--  <p class="section-desc" style="margin-bottom:20px;">Webster's equation-based vocal tract model with physics-constrained DDSP synthesis</p>-->
-<!--  <div class="fig-card">-->
-<!--    <div class="fig-placeholder">[ Replace with system_diagram.png ]</div>-->
-<!--    <p class="fig-caption">-->
-<!--      <strong>Figure 1.</strong> Phy-VC pipeline: WavLM content encoder → CNN preprocessing → Transformer → Webster's equation surrogate (FormantNet) → DDSP vocoder with PolyBLEP anti-aliasing → anonymised output preserving clinical acoustic markers.-->
-<!--    </p>-->
-<!--  </div>-->
-<!--</div>-->
+  <div class="tabs" style="margin-bottom:20px;">
+    <button class="tab active" onclick="showVTLSubset('scaling', this)">VTL Scaling</button>
+    <button class="tab" onclick="showVTLSubset('interpolation', this)">Speaker Interpolation</button>
+  </div>
+
+  <!-- ── VTL Scaling sub-panel ── -->
+<div id="vtl-sub-scaling">
+  <p class="section-desc">Same source utterance re-synthesised at different VTL scaling factors &nbsp;·&nbsp; Listen for perceived speaker size changes while content and dysfluencies are preserved.</p>
+  <table class="audio-table" id="table-vtl">
+  <thead>
+  <tr>
+    <th style="text-align:left" rowspan="2">Sample</th>
+    <th colspan="7" style="text-align:center; border-bottom: 1px solid var(--border); padding: 10px 14px;">
+  <div style="display:flex; align-items:center; justify-content:space-between; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.08em; color:var(--muted);">
+    <span>SHORTER VTL</span>
+      <div style="display:flex; align-items:center; flex:1; margin: 0 16px;">
+        <div style="width:0; height:0; border-top:7px solid transparent; border-bottom:7px solid transparent; border-right:12px solid var(--accent);"></div>
+  <div style="flex:1; height:2px; background: linear-gradient(to right, var(--accent), var(--border), var(--accent));"></div>
+  <div style="width:0; height:0; border-top:7px solid transparent; border-bottom:7px solid transparent; border-left:12px solid var(--accent);"></div>
+</div>
+    <span>LONGER VTL</span>
+  </div>
+</th>
+  </tr>
+  <tr>
+    <th><span class="vtl-badge">−100%</span></th>
+    <th><span class="vtl-badge">−67%</span></th>
+    <th><span class="vtl-badge">−33%</span></th>
+    <th><span class="vtl-badge neutral">Neutral</span></th>
+    <th><span class="vtl-badge">+33%</span></th>
+    <th><span class="vtl-badge">+67%</span></th>
+    <th><span class="vtl-badge">+100%</span></th>
+  </tr>
+</thead>
+    <tbody id="tbody-vtl"></tbody>
+  </table>
+</div>
+
+  <!-- ── Speaker Interpolation sub-panel ── -->
+  <div id="vtl-sub-interpolation" style="display:none">
+    <p class="section-desc">Source content interpolated between two target speaker vocal tract profiles &nbsp;·&nbsp; The VTL and resonance characteristics blend smoothly across the ratio.</p>
+    <div class="spk-info">
+      <div class="spk-card">
+        <strong>Speaker A</strong>
+        Reference speaker 1 &nbsp;·&nbsp; e.g. F · adult · neutral speech
+      </div>
+      <div class="spk-card" style="text-align:center; flex:0.3; display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--accent);">
+        ←→
+      </div>
+      <div class="spk-card" style="text-align:right">
+        <strong>Speaker B</strong>
+        Reference speaker 2 &nbsp;·&nbsp; e.g. M · adult · neutral speech
+      </div>
+    </div>
+    <table class="audio-table" id="table-interp">
+      <thead>
+        <tr>
+          <th style="text-align:left">Source Sample</th>
+          <th><span class="ratio-badge">Spk A<br>100%</span></th>
+          <th><span class="ratio-badge">75 / 25</span></th>
+          <th><span class="ratio-badge mid">50 / 50</span></th>
+          <th><span class="ratio-badge">25 / 75</span></th>
+          <th><span class="ratio-badge">Spk B<br>100%</span></th>
+        </tr>
+      </thead>
+      <tbody id="tbody-interp"></tbody>
+    </table>
+  </div>
+</div>
 
 <footer>
   Phy-VC &nbsp;·&nbsp; Interspeech 2026 &nbsp;·&nbsp; Audio samples anonymised for blind review.
@@ -246,45 +303,32 @@
 
 <script>
 // ═══════════════════════════════════════════
-//  SAMPLE DATA
-//  n       : file index (matches filename prefix)
-//  src     : source speaker gender (M or F)
-//  type    : subfolder / filter tag
-//  label   : display name
-//  meta    : short descriptor shown in the cell
+//  ANONYMISATION SAMPLE DATA
 // ═══════════════════════════════════════════
-
 const STUTTER_SAMPLES = [
-  // — Sound Repetition —
-  { n:1, src:'M', type:'srep',        label:'Sound Rep.',  meta:'M · sample 1' },
-  { n:2, src:'M', type:'srep',        label:'Sound Rep.',  meta:'M · sample 2' },
-    { n:3, src:'M', type:'srep',        label:'Sound Rep.',  meta:'M · sample 3' },
-    { n:4, src:'F', type:'srep',        label:'Sound Rep.',  meta:'F · sample 4' },
-    { n:5, src:'F', type:'srep',        label:'Sound Rep.',  meta:'F · sample 5' },
-    { n:6, src:'F', type:'srep',        label:'Sound Rep.',  meta:'F · sample 6' },
-  // — Word Repetition —
-  { n:1, src:'F', type:'wrep',        label:'Word Rep.',   meta:'F · sample 1' },
-  { n:2, src:'F', type:'wrep',        label:'Word Rep.',   meta:'F · sample 2' },
-    { n:3, src:'M', type:'wrep',        label:'Word Rep.',   meta:'M · sample 3' },
-  { n:4, src:'M', type:'wrep',        label:'Word Rep.',   meta:'M · sample 4' },
-  // — Prolongation —
-  { n:1, src:'M', type:'prolongation',label:'Prolongation',meta:'M · sample 1' },
-  { n:2, src:'M', type:'prolongation',label:'Prolongation',meta:'M · sample 2' },
-    { n:3, src:'F', type:'prolongation',label:'Prolongation',meta:'F · sample 3' },
-  { n:4, src:'F', type:'prolongation',label:'Prolongation',meta:'F · sample 4' },
-    { n:5, src:'F', type:'prolongation',label:'Prolongation',meta:'F · sample 5' },
-
-  // — Block —
-    { n:4, src:'M', type:'block',       label:'Block',       meta:'M · sample 1' },
-    { n:2, src:'F', type:'block',       label:'Block',       meta:'F · sample 2' },
-  { n:1, src:'F', type:'block',       label:'Block',       meta:'F · sample 3' },
-    { n:3, src:'M', type:'block',       label:'Block',       meta:'M · sample 4' },
-
-  // — Filler —
-  { n:1, src:'M', type:'filler',label:'Interjection/Filler',meta:'M · sample 1' },
-  { n:2, src:'M', type:'filler',label:'Interjection/Filler',meta:'M · sample 2' },
-    { n:3, src:'F', type:'filler',label:'Interjection/Filler',meta:'F · sample 3' },
-  { n:4, src:'F', type:'filler',label:'Interjection/Filler',meta:'F · sample 4' },
+  { n:1, src:'M', type:'srep',         label:'Sound Rep.',           meta:'M · sample 1' },
+  { n:2, src:'M', type:'srep',         label:'Sound Rep.',           meta:'M · sample 2' },
+  { n:3, src:'M', type:'srep',         label:'Sound Rep.',           meta:'M · sample 3' },
+  { n:4, src:'F', type:'srep',         label:'Sound Rep.',           meta:'F · sample 4' },
+  { n:5, src:'F', type:'srep',         label:'Sound Rep.',           meta:'F · sample 5' },
+  { n:6, src:'F', type:'srep',         label:'Sound Rep.',           meta:'F · sample 6' },
+  { n:1, src:'F', type:'wrep',         label:'Word Rep.',            meta:'F · sample 1' },
+  { n:2, src:'F', type:'wrep',         label:'Word Rep.',            meta:'F · sample 2' },
+  { n:3, src:'M', type:'wrep',         label:'Word Rep.',            meta:'M · sample 3' },
+  { n:4, src:'M', type:'wrep',         label:'Word Rep.',            meta:'M · sample 4' },
+  { n:1, src:'M', type:'prolongation', label:'Prolongation',         meta:'M · sample 1' },
+  { n:2, src:'M', type:'prolongation', label:'Prolongation',         meta:'M · sample 2' },
+  { n:3, src:'F', type:'prolongation', label:'Prolongation',         meta:'F · sample 3' },
+  { n:4, src:'F', type:'prolongation', label:'Prolongation',         meta:'F · sample 4' },
+  { n:5, src:'F', type:'prolongation', label:'Prolongation',         meta:'F · sample 5' },
+  { n:4, src:'M', type:'block',        label:'Block',                meta:'M · sample 1' },
+  { n:2, src:'F', type:'block',        label:'Block',                meta:'F · sample 2' },
+  { n:1, src:'F', type:'block',        label:'Block',                meta:'F · sample 3' },
+  { n:3, src:'M', type:'block',        label:'Block',                meta:'M · sample 4' },
+  { n:1, src:'M', type:'filler',       label:'Interjection/Filler',  meta:'M · sample 1' },
+  { n:2, src:'M', type:'filler',       label:'Interjection/Filler',  meta:'M · sample 2' },
+  { n:3, src:'F', type:'filler',       label:'Interjection/Filler',  meta:'F · sample 3' },
+  { n:4, src:'F', type:'filler',       label:'Interjection/Filler',  meta:'F · sample 4' },
 ];
 
 const DEMENTIA_SAMPLES = [
@@ -309,8 +353,32 @@ const SD_SAMPLES = [
 ];
 
 // ═══════════════════════════════════════════
+//  VTL SAMPLE DATA
+//  Path: final_files/vtl/{n}_{src}_{factor}.wav
+//        final_files/vtl/{n}_original.wav
+//  factor: m20 | m10 | 0 | p10 | p20
+// ═══════════════════════════════════════════
+const VTL_SAMPLES = [
+  { n:1, src:'F', label:'Sample 1', meta: 'F' },
+  { n:2, src:'F', label:'Sample 1', meta:'F' },
+  { n:3, src:'M', label:'Sample 3', meta:'M' },
+  { n:4, src:'M', label:'Sample 4', meta:'M' },
+];
+
+// ═══════════════════════════════════════════
+//  INTERPOLATION SAMPLE DATA
+//  Path: final_files/interp/{n}_{ratio}.wav
+//        final_files/interp/{n}_original.wav
+//  ratio: A100 | A75B25 | A50B50 | A25B75 | B100
+// ═══════════════════════════════════════════
+const INTERP_SAMPLES = [
+  { n:1, label:'Sample 1', meta:'source utterance 1' },
+  { n:2, label:'Sample 2', meta:'source utterance 2' },
+  { n:3, label:'Sample 3', meta:'source utterance 3' },
+];
+
+// ═══════════════════════════════════════════
 //  PATH FUNCTIONS
-//  Adjust base folder here if needed
 // ═══════════════════════════════════════════
 const paths = {
   stutter(n, src, tgt, model, type) {
@@ -325,15 +393,22 @@ const paths = {
     if (model === 'original') return `final_files/elderly/healthy/${n}_original.wav`;
     return `final_files/elderly/healthy/${n}_${src}_${tgt}_${model}.wav`;
   },
-
-    standardds(n, src, tgt, model) {
+  standardds(n, src, tgt, model) {
     if (model === 'original') return `final_files/sd/${n}_original.wav`;
     return `final_files/sd/${n}_${src}_${tgt}_${model}.wav`;
+  },
+  vtl(n, src, factor) {
+    if (factor === 'original') return `final_files/vtl/${n}_original.wav`;
+    return `final_files/vtl/${n}_${src}_${factor}.wav`;
+  },
+  interp(n, ratio) {
+    if (ratio === 'original') return `final_files/interp/${n}_original.wav`;
+    return `final_files/interp/${n}_${ratio}.wav`;
   },
 };
 
 // ═══════════════════════════════════════════
-//  RENDER ENGINE
+//  RENDER ENGINE — anonymisation tables
 // ═══════════════════════════════════════════
 const MODELS = ['knnvc', 'emo', 'ddspqbe', 'ours'];
 
@@ -341,12 +416,6 @@ function au(src) {
   return `<audio controls src="${src}"></audio>`;
 }
 
-/**
- * Render a sample pair (female row + male row) as HTML string.
- *
- * @param {object} s       - sample descriptor
- * @param {Function} pfn   - (n, src, tgt, model) => path string
- */
 function renderPair(s, pfn) {
   const srcAudio = au(pfn(s.n, s.src, null, 'original'));
   const srcIcon = s.src === 'F' ? 'F' : 'M';
@@ -354,7 +423,6 @@ function renderPair(s, pfn) {
     { tgtCode:'F', cls:'female', icon:`${srcIcon} → F`, pairClass:'' },
     { tgtCode:'M', cls:'male',   icon:`${srcIcon} → M`, pairClass:'pair-bottom' },
   ];
-
   return rows.map((r, i) => {
     const srcCell = i === 0
       ? `<td class="src-cell" rowspan="2">
@@ -364,11 +432,7 @@ function renderPair(s, pfn) {
            <div style="margin-top:8px">${srcAudio}</div>
          </td>`
       : '';
-
-    const modelCells = MODELS.map(m =>
-      `<td>${au(pfn(s.n, s.src, r.tgtCode, m))}</td>`
-    ).join('');
-
+    const modelCells = MODELS.map(m => `<td>${au(pfn(s.n, s.src, r.tgtCode, m))}</td>`).join('');
     return `<tr data-tag="${s.type}" class="${r.pairClass}">
   ${srcCell}
   <td class="tgt-cell ${r.cls}">${r.icon}</td>
@@ -377,59 +441,80 @@ function renderPair(s, pfn) {
   }).join('\n') + `\n<tr class="spacer-row" data-tag="${s.type}"><td colspan="6" style="height:10px; background:var(--bg); border:none; padding:0;"></td></tr>`;
 }
 
-function renderTable(tbodyId, samples, pfn) {
-  document.getElementById(tbodyId).innerHTML =
-    samples.map(s => renderPair(s, pfn)).join('\n');
+// ═══════════════════════════════════════════
+//  RENDER ENGINE — VTL scaling table
+//  One row per sample, columns = VTL factors
+// ═══════════════════════════════════════════
+
+const VTL_STEPS = ['neg_100', 'neg_67', 'neg_33', 'neutral', 'pos_33', 'pos_67', 'pos_100'];
+
+function renderVTLRow(s) {
+  const stepCells = VTL_STEPS.map(f => `<td>${au(paths.vtl(s.n, s.src, f))}</td>`).join('');
+  const label = `<td style="text-align:left; padding:10px 14px; border-right:1px solid var(--border);">
+    <div class="sample-label">${s.label}</div>
+    <div class="sample-meta">${s.meta}</div>
+  </td>`;
+  return `<tr>${label}${stepCells}</tr>
+<tr class="spacer-row"><td colspan="8" style="height:10px; background:var(--bg); border:none; padding:0;"></td></tr>`;
 }
 
-// ── init ──
-renderTable('tbody-stutter',  STUTTER_SAMPLES,  (n,src,tgt,m) => paths.stutter(n,src,tgt,m, STUTTER_SAMPLES.find(s=>s.n===n&&s.src===src)?.type));
-renderTable('tbody-dementia', DEMENTIA_SAMPLES, (n,src,tgt,m) => paths.dementia(n,src,tgt,m, DEMENTIA_SAMPLES.find(s=>s.n===n&&s.src===src)?.type));
-renderTable('tbody-elderly',  ELDERLY_SAMPLES,  (n,src,tgt,m) => paths.elderly(n,src,tgt,m));
-renderTable('tbody-sd',  SD_SAMPLES,  (n,src,tgt,m) => paths.standardds(n,src,tgt,m));
+// ═══════════════════════════════════════════
+//  RENDER ENGINE — interpolation table
+//  One row per sample, columns = ratios
+// ═══════════════════════════════════════════
+const INTERP_RATIOS = ['A100', 'A75B25', 'A50B50', 'A25B75', 'B100'];
 
-// The above "find" approach fails when same n appears in different types.
-// Re-render with proper closure instead:
+function renderInterpRow(s) {
+  const srcCell = `<td class="src-cell" style="border-bottom:1px solid var(--border);">
+    <div class="sample-label">${s.label}</div>
+    <div class="sample-meta">${s.meta}</div>
+    <div style="margin-top:8px">${au(paths.interp(s.n, 'original'))}</div>
+  </td>`;
+  const ratioCells = INTERP_RATIOS.map(r => `<td>${au(paths.interp(s.n, r))}</td>`).join('');
+  return `<tr>${srcCell}${ratioCells}</tr>
+<tr class="spacer-row"><td colspan="6" style="height:10px; background:var(--bg); border:none; padding:0;"></td></tr>`;
+}
+
+// ═══════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════
 document.getElementById('tbody-stutter').innerHTML =
-  STUTTER_SAMPLES.map(s => renderPair(s,
-    (n,src,tgt,m) => paths.stutter(n,src,tgt,m,s.type)
-  )).join('\n');
+  STUTTER_SAMPLES.map(s => renderPair(s, (n,src,tgt,m) => paths.stutter(n,src,tgt,m,s.type))).join('\n');
 
 document.getElementById('tbody-dementia').innerHTML =
-  DEMENTIA_SAMPLES.map(s => renderPair(s,
-    (n,src,tgt,m) => paths.dementia(n,src,tgt,m,s.type)
-  )).join('\n');
+  DEMENTIA_SAMPLES.map(s => renderPair(s, (n,src,tgt,m) => paths.dementia(n,src,tgt,m,s.type))).join('\n');
 
 document.getElementById('tbody-elderly').innerHTML =
-  ELDERLY_SAMPLES.map(s => renderPair(s,
-    (n,src,tgt,m) => paths.elderly(n,src,tgt,m)
-  )).join('\n');
+  ELDERLY_SAMPLES.map(s => renderPair(s, (n,src,tgt,m) => paths.elderly(n,src,tgt,m))).join('\n');
 
 document.getElementById('tbody-sd').innerHTML =
-  SD_SAMPLES.map(s => renderPair(s,
-    (n,src,tgt,m) => paths.standardds(n,src,tgt,m)
-  )).join('\n');
+  SD_SAMPLES.map(s => renderPair(s, (n,src,tgt,m) => paths.standardds(n,src,tgt,m))).join('\n');
 
-// ── tab filter ──
+document.getElementById('tbody-vtl').innerHTML =
+  VTL_SAMPLES.map(s => renderVTLRow(s)).join('\n');
+
+document.getElementById('tbody-interp').innerHTML =
+  INTERP_SAMPLES.map(s => renderInterpRow(s)).join('\n');
+
+// ── tab filter (disfluency subtypes) ──
 function filterTable(tableId, tag, btn) {
   btn.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll(`#table-${tableId} tbody tr`).forEach(row => {
-    // show/hide pairs together: both rows carry the same data-tag
     row.style.display = (tag === 'all' || row.dataset.tag === tag) ? '' : 'none';
   });
 }
 
-
-
-
+// ── top-level section switching ──
 function showSection(id, btn) {
   document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  ['stutter', 'elderly', 'sd'].forEach(s => {
+  ['stutter', 'elderly', 'sd', 'vtl'].forEach(s => {
     document.getElementById(`section-${s}`).style.display = s === id ? '' : 'none';
   });
 }
+
+// ── elderly sub-panel ──
 function showElderlySubset(id, btn) {
   btn.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
@@ -437,9 +522,18 @@ function showElderlySubset(id, btn) {
     document.getElementById(`elderly-sub-${s}`).style.display = s === id ? '' : 'none';
   });
 }
-// hide all but first on load
-['elderly', 'sd'].forEach(s => document.getElementById(`section-${s}`).style.display = 'none');
 
+// ── VTL sub-panel ──
+function showVTLSubset(id, btn) {
+  btn.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['scaling', 'interpolation'].forEach(s => {
+    document.getElementById(`vtl-sub-${s}`).style.display = s === id ? '' : 'none';
+  });
+}
+
+// hide all but first on load
+['elderly', 'sd', 'vtl'].forEach(s => document.getElementById(`section-${s}`).style.display = 'none');
 </script>
 </body>
 </html>
