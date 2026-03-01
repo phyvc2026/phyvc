@@ -12,8 +12,8 @@
       --border: #ddd8d0;
       --text: #1a1814;
       --muted: #7a746b;
-      --accent: #2d5a3d;
-      --accent-light: #e8f2ec;
+       --accent: #8B3A2F;
+        --accent-light: #f5e8e6;
       --tag-bg: #eae6e0;
       --female-bg: #fff0f6;
       --female-text: #8b3a5a;
@@ -59,7 +59,7 @@
     .disfluency-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: .05em; padding: 1px 7px; border-radius: 4px; background: var(--tag-bg); color: var(--muted); margin-top: 5px; }
 
     .model-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: .05em; padding: 2px 7px; border-radius: 4px; margin-bottom: 4px; background: var(--tag-bg); color: var(--muted); }
-    .model-badge.ours { background: var(--accent-light); color: var(--accent); border: 1px solid #b9d8c4; font-weight: 600; }
+    .model-badge.ours { background: var(--accent-light); color: var(--accent); border: 1px solid #d4a099; font-weight: 600; }
 
     audio { width: 100%; min-width: 140px; max-width: 190px; height: 34px; accent-color: var(--accent); display: block; margin: 0 auto; }
 
@@ -113,7 +113,8 @@
   <p class="section-title">Experiment 01</p>
   <h2>Stuttering Speech</h2>
   <p class="section-desc">From SEP-28k and FluencyBank datasets &nbsp;·&nbsp; Each source utterance is anonymised to a female and a male voice &nbsp;·&nbsp; Dysfluencies should be preserved.</p>
-  <div class="tabs">
+  <p class="section-desc">Select a condition below.</p>
+    <div class="tabs">
     <button class="tab active" onclick="filterTable('stutter','all',this)">All</button>
     <button class="tab" onclick="filterTable('stutter','srep',this)">Sound Rep.</button>
     <button class="tab" onclick="filterTable('stutter','wrep',this)">Word Rep.</button>
@@ -139,57 +140,67 @@
 <!--<hr class="divider"/>-->
 
 <!-- ══════════════════════════════════════
-  SECTION 2 · Dementia (ADReSS)
+  SECTION 2 · Dementia (ADReSSo)
   Path: final_files/elderly/dementia/{mild|severe}/{n}_{src}_{tgt}_{model}.wav
 ══════════════════════════════════════ -->
 <div class="samples-wrap" id="section-elderly">
   <p class="section-title">Experiment 02</p>
-  <h2>Dementia Speech</h2>
-    <p class="section-desc">From ADReSSo dataset &nbsp;·&nbsp; Each source utterance is anonymised to a female and a male voice &nbsp;·&nbsp; Vocal tremor, reduced articulatory precision and other elderly attributes should be preserved.</p>
-  <div class="tabs">
-    <button class="tab active" onclick="filterTable('dementia','all',this)">All</button>
-    <button class="tab" onclick="filterTable('dementia','mild',this)">Mild</button>
-    <button class="tab" onclick="filterTable('dementia','severe',this)">Severe</button>
-  </div>
-  <table class="audio-table" id="table-dementia">
-    <thead>
-      <tr>
-        <th style="text-align:left">Original Sample</th>
-        <th>Gender<br><span style="font-size:11px; font-weight:400">(Src → Tgt)</span></th>
-        <th><span class="model-badge">kNN-VC</span></th>
-        <th><span class="model-badge">Emo-StarGAN</span></th>
-        <th><span class="model-badge">DDSP-QbE</span></th>
-        <th><span class="model-badge ours">Phy-VC (Ours)</span></th>
-      </tr>
-    </thead>
-    <tbody id="tbody-dementia"></tbody>
-  </table>
-</div>
+  <h2>Elderly Speech</h2>
+  <p class="section-desc">Select a condition below.</p>
 
+  <div class="tabs" style="margin-bottom:12px;">
+    <button class="tab active" onclick="showElderlySubset('dementia', this)">Dementia</button>
+    <button class="tab" onclick="showElderlySubset('healthy', this)">Healthy Elderly</button>
+  </div>
+
+  <!-- Dementia sub-panel -->
+  <div id="elderly-sub-dementia">
+    <p class="section-desc">ADReSSo dataset · Pause patterns and prosodic abnormalities preserved.</p>
+    <div class="tabs">
+      <button class="tab active" onclick="filterTable('dementia','all',this)">All</button>
+      <button class="tab" onclick="filterTable('dementia','mild',this)">Mild</button>
+      <button class="tab" onclick="filterTable('dementia','severe',this)">Severe</button>
+    </div>
+    <table class="audio-table" id="table-dementia">
+      <thead>
+        <tr>
+          <th style="text-align:left">Original Sample</th>
+          <th>Gender<br><span style="font-size:11px; font-weight:400">(Src → Tgt)</span></th>
+          <th><span class="model-badge">kNN-VC</span></th>
+          <th><span class="model-badge">Emo-StarGAN</span></th>
+          <th><span class="model-badge">DDSP-QbE</span></th>
+          <th><span class="model-badge ours">Phy-VC (Ours)</span></th>
+        </tr>
+      </thead>
+      <tbody id="tbody-dementia"></tbody>
+    </table>
+  </div>
+
+  <!-- Healthy elderly sub-panel -->
+  <div id="elderly-sub-healthy" style="display:none">
+    <p class="section-desc">Healthy elderly speakers · Vocal tremor and reduced articulatory precision preserved.</p>
+    <table class="audio-table" id="table-elderly">
+      <thead>
+        <tr>
+          <th style="text-align:left">Original Sample</th>
+          <th>Gender<br><span style="font-size:11px; font-weight:400">(Src → Tgt)</span></th>
+          <th><span class="model-badge">kNN-VC</span></th>
+          <th><span class="model-badge">Emo-StarGAN</span></th>
+          <th><span class="model-badge">DDSP-QbE</span></th>
+          <th><span class="model-badge ours">Phy-VC (Ours)</span></th>
+        </tr>
+      </thead>
+      <tbody id="tbody-elderly"></tbody>
+    </table>
+  </div>
+</div>
 <!--<hr class="divider"/>-->
 
 <!-- ══════════════════════════════════════
   SECTION 3 · Elderly
   Path: final_files/elderly/healthy/{n}_{src}_{tgt}_{model}.wav
 ══════════════════════════════════════ -->
-<div class="samples-wrap" id="section-dementia">
-  <p class="section-title">Experiment 02</p>
-  <h2>Elderly Speech</h2>
-  <p class="section-desc">Healthy elderly speakers &nbsp;·&nbsp; Vocal tremor, reduced articulatory precision and other elderly attributes should be preserved.</p>
-  <table class="audio-table" id="table-elderly">
-    <thead>
-      <tr>
-        <th style="text-align:left">Original Sample</th>
-        <th>Gender<br><span style="font-size:11px; font-weight:400">(Src → Tgt)</span></th>
-        <th><span class="model-badge">kNN-VC</span></th>
-        <th><span class="model-badge">Emo-StarGAN</span></th>
-        <th><span class="model-badge">DDSP-QbE</span></th>
-        <th><span class="model-badge ours">Phy-VC (Ours)</span></th>
-      </tr>
-    </thead>
-    <tbody id="tbody-elderly"></tbody>
-  </table>
-</div>
+
 
 <!-- ══════════════════════════════════════
   SECTION 4 · SD
@@ -417,8 +428,19 @@ function showSection(id, btn) {
     document.getElementById(`section-${s}`).style.display = s === id ? '' : 'none';
   });
 }
+function showElderlySubset(id, btn) {
+  btn.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ['dementia', 'healthy'].forEach(s => {
+    document.getElementById(`elderly-sub-${s}`).style.display = s === id ? '' : 'none';
+  });
+}
 // hide all but first on load
-['elderly', 'dementia', 'sd'].forEach(s => document.getElementById(`section-${s}`).style.display = 'none');
+['stutter', 'elderly', 'sd'].forEach(s => {
+  document.getElementById(`section-${s}`).style.display = s === id ? '' : 'none';
+});
+// and on load:
+['elderly', 'sd'].forEach(s => document.getElementById(`section-${s}`).style.display = 'none');
 
 
 </script>
