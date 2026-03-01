@@ -112,7 +112,7 @@
 <div class="samples-wrap" id="section-stutter">
   <p class="section-title">Experiment 01</p>
   <h2>Stuttering Speech</h2>
-  <p class="section-desc">From SEP-28k and FluencyBank datasets &nbsp;·&nbsp; Each source utterance is anonymised to a female and a male voice &nbsp;·&nbsp; Dysfluencies should be preserved.</p>
+  <p class="section-desc">From SEP-28k and FluencyBank datasets &nbsp;·&nbsp; Each source utterance is anonymised to a female and a male voice &nbsp;·&nbsp; Dysfluencies and its severity should be preserved.</p>
   <p class="section-desc">Select a condition below.</p>
     <div class="tabs">
     <button class="tab active" onclick="filterTable('stutter','all',this)">All</button>
@@ -155,7 +155,7 @@
 
   <!-- Dementia sub-panel -->
   <div id="elderly-sub-dementia">
-    <p class="section-desc">ADReSSo dataset · Pause patterns and prosodic abnormalities preserved.</p>
+    <p class="section-desc">From ADReSSo dataset &nbsp;·&nbsp; Vocal tremor, reduced articulatory precision, and dysfluencies should be preserved.</p>
     <div class="tabs">
       <button class="tab active" onclick="filterTable('dementia','all',this)">All</button>
       <button class="tab" onclick="filterTable('dementia','mild',this)">Mild</button>
@@ -178,7 +178,7 @@
 
   <!-- Healthy elderly sub-panel -->
   <div id="elderly-sub-healthy" style="display:none">
-    <p class="section-desc">Healthy elderly speakers · Vocal tremor and reduced articulatory precision preserved.</p>
+      <p class="section-desc">From ADReSSo dataset &nbsp;·&nbsp; Healthy elderly speakers</p>
     <table class="audio-table" id="table-elderly">
       <thead>
         <tr>
@@ -275,10 +275,11 @@ const STUTTER_SAMPLES = [
     { n:5, src:'F', type:'prolongation',label:'Prolongation',meta:'F · sample 5' },
 
   // — Block —
-  { n:1, src:'F', type:'block',       label:'Block',       meta:'F · sample 1' },
+    { n:4, src:'M', type:'block',       label:'Block',       meta:'M · sample 1' },
     { n:2, src:'F', type:'block',       label:'Block',       meta:'F · sample 2' },
-    { n:3, src:'M', type:'block',       label:'Block',       meta:'M · sample 3' },
-    { n:4, src:'M', type:'block',       label:'Block',       meta:'M · sample 4' },
+  { n:1, src:'F', type:'block',       label:'Block',       meta:'F · sample 3' },
+    { n:3, src:'M', type:'block',       label:'Block',       meta:'M · sample 4' },
+
   // — Filler —
   { n:1, src:'M', type:'filler',label:'Interjection/Filler',meta:'M · sample 1' },
   { n:2, src:'M', type:'filler',label:'Interjection/Filler',meta:'M · sample 2' },
@@ -421,10 +422,11 @@ function filterTable(tableId, tag, btn) {
 
 
 
+
 function showSection(id, btn) {
   document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  ['stutter', 'elderly', 'dementia', 'sd'].forEach(s => {
+  ['stutter', 'elderly', 'sd'].forEach(s => {
     document.getElementById(`section-${s}`).style.display = s === id ? '' : 'none';
   });
 }
@@ -436,12 +438,7 @@ function showElderlySubset(id, btn) {
   });
 }
 // hide all but first on load
-['stutter', 'elderly', 'sd'].forEach(s => {
-  document.getElementById(`section-${s}`).style.display = s === id ? '' : 'none';
-});
-// and on load:
 ['elderly', 'sd'].forEach(s => document.getElementById(`section-${s}`).style.display = 'none');
-
 
 </script>
 </body>
