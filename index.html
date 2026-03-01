@@ -95,10 +95,13 @@
 
 <hr class="divider"/>
 
+<p style="font-family:'DM Mono',monospace; font-size:14px; letter-spacing:.08em; color:var(--muted); max-width:1160px; margin:0 auto 12px; padding:0 24px;">
+  SELECT A SPEECH CONDITION OR ANALYSIS TO EXPLORE RESULTS
+</p>
 <div class="section-tabs">
   <button class="section-tab active" onclick="showSection('stutter', this)">Stuttering</button>
   <button class="section-tab" onclick="showSection('elderly', this)">Elderly</button>
-  <button class="section-tab" onclick="showSection('sd', this)">SD</button>
+  <button class="section-tab" onclick="showSection('sd', this)">Standard Dataset (SD)</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -109,7 +112,7 @@
 <div class="samples-wrap" id="section-stutter">
   <p class="section-title">Experiment 01</p>
   <h2>Stuttering Speech</h2>
-  <p class="section-desc">SEP-28k dataset &nbsp;·&nbsp; Each source utterance is anonymised to a female and a male voice. Dysfluencies should be preserved.</p>
+  <p class="section-desc">From SEP-28k and FluencyBank datasets &nbsp;·&nbsp; Each source utterance is anonymised to a female and a male voice &nbsp;·&nbsp; Dysfluencies should be preserved.</p>
   <div class="tabs">
     <button class="tab active" onclick="filterTable('stutter','all',this)">All</button>
     <button class="tab" onclick="filterTable('stutter','srep',this)">Sound Rep.</button>
@@ -142,7 +145,7 @@
 <div class="samples-wrap" id="section-elderly">
   <p class="section-title">Experiment 02</p>
   <h2>Dementia Speech</h2>
-  <p class="section-desc">ADReSSo dataset &nbsp;·&nbsp; Pause patterns and prosodic abnormalities should be preserved.</p>
+    <p class="section-desc">From ADReSSo dataset &nbsp;·&nbsp; Each source utterance is anonymised to a female and a male voice &nbsp;·&nbsp; Vocal tremor, reduced articulatory precision and other elderly attributes should be preserved.</p>
   <div class="tabs">
     <button class="tab active" onclick="filterTable('dementia','all',this)">All</button>
     <button class="tab" onclick="filterTable('dementia','mild',this)">Mild</button>
@@ -170,7 +173,7 @@
   Path: final_files/elderly/healthy/{n}_{src}_{tgt}_{model}.wav
 ══════════════════════════════════════ -->
 <div class="samples-wrap" id="section-dementia">
-  <p class="section-title">Experiment 03</p>
+  <p class="section-title">Experiment 02</p>
   <h2>Elderly Speech</h2>
   <p class="section-desc">Healthy elderly speakers &nbsp;·&nbsp; Vocal tremor, reduced articulatory precision and other elderly attributes should be preserved.</p>
   <table class="audio-table" id="table-elderly">
@@ -193,9 +196,9 @@
   Path: final_files/sd/{n}_{src}_{tgt}_{model}.wav
 ══════════════════════════════════════ -->
 <div class="samples-wrap" id="section-sd">
-  <p class="section-title">Experiment 04</p>
+  <p class="section-title">Experiment 03</p>
   <h2>Standard Speech (not Elderly or Pathological)</h2>
-  <p class="section-desc">Healthy young speakers (standard dataset) &nbsp;·&nbsp; No pathology should be introduced.</p>
+  <p class="section-desc">Healthy young speakers from ESD and LibriSpeech datasets &nbsp;·&nbsp; No pathology should be introduced.</p>
   <table class="audio-table" id="table-sd">
     <thead>
       <tr>
@@ -244,13 +247,15 @@ const STUTTER_SAMPLES = [
   // — Sound Repetition —
   { n:1, src:'M', type:'srep',        label:'Sound Rep.',  meta:'M · sample 1' },
   { n:2, src:'M', type:'srep',        label:'Sound Rep.',  meta:'M · sample 2' },
-    { n:3, src:'F', type:'srep',        label:'Sound Rep.',  meta:'F · sample 3' },
+    { n:3, src:'M', type:'srep',        label:'Sound Rep.',  meta:'M · sample 3' },
     { n:4, src:'F', type:'srep',        label:'Sound Rep.',  meta:'F · sample 4' },
+    { n:5, src:'F', type:'srep',        label:'Sound Rep.',  meta:'F · sample 5' },
+    { n:6, src:'F', type:'srep',        label:'Sound Rep.',  meta:'F · sample 6' },
   // — Word Repetition —
-  { n:1, src:'M', type:'wrep',        label:'Word Rep.',   meta:'M · sample 1' },
-  { n:2, src:'M', type:'wrep',        label:'Word Rep.',   meta:'M · sample 2' },
-    { n:3, src:'F', type:'wrep',        label:'Word Rep.',   meta:'F · sample 3' },
-  { n:4, src:'F', type:'wrep',        label:'Word Rep.',   meta:'F · sample 4' },
+  { n:1, src:'F', type:'wrep',        label:'Word Rep.',   meta:'F · sample 1' },
+  { n:2, src:'F', type:'wrep',        label:'Word Rep.',   meta:'F · sample 2' },
+    { n:3, src:'M', type:'wrep',        label:'Word Rep.',   meta:'M · sample 3' },
+  { n:4, src:'M', type:'wrep',        label:'Word Rep.',   meta:'M · sample 4' },
   // — Prolongation —
   { n:1, src:'M', type:'prolongation',label:'Prolongation',meta:'M · sample 1' },
   { n:2, src:'M', type:'prolongation',label:'Prolongation',meta:'M · sample 2' },
@@ -278,10 +283,10 @@ const DEMENTIA_SAMPLES = [
 ];
 
 const ELDERLY_SAMPLES = [
-  { n:1, src:'F', type:'healthy', label:'Healthy elderly', meta:'F · sample 1' },
-  { n:2, src:'F', type:'healthy', label:'Healthy elderly', meta:'F · sample 2' },
-  { n:3, src:'M', type:'healthy', label:'Healthy elderly', meta:'M · sample 3' },
-  { n:4, src:'M', type:'healthy', label:'Healthy elderly', meta:'M · sample 4' },
+  { n:1, src:'M', type:'healthy', label:'Healthy elderly', meta:'M · sample 1' },
+  { n:2, src:'M', type:'healthy', label:'Healthy elderly', meta:'M · sample 2' },
+  { n:3, src:'F', type:'healthy', label:'Healthy elderly', meta:'F · sample 3' },
+  { n:4, src:'F', type:'healthy', label:'Healthy elderly', meta:'F · sample 4' },
 ];
 
 const SD_SAMPLES = [
