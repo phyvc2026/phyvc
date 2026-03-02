@@ -43,7 +43,7 @@
     .audio-table th { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); padding: 12px 14px; text-align: center; border-bottom: 1.5px solid var(--border); }
     .audio-table th:first-child { text-align: left; }
 
-    .audio-table td.src-cell { padding: 12px 14px; vertical-align: middle; border-bottom: none; border-right: 1px solid var(--border); }
+    .audio-table td.src-cell { padding: 12px 14px; vertical-align: middle; border-bottom: none; border-right: 1px solid var(--border); text-align: center; }
     .audio-table tr.pair-bottom td { border-bottom: none; }
     .audio-table td { padding: 10px 12px; vertical-align: middle; border-bottom: 1px solid var(--border); text-align: center; }
     .audio-table tbody tr:last-child td { border-bottom: none; }
@@ -53,9 +53,9 @@
     .tgt-cell.female { background: var(--female-bg); color: var(--female-text); }
     .tgt-cell.male   { background: var(--male-bg);   color: var(--male-text); }
 
-    .sample-label { font-size: 0.85rem; font-weight: 600; }
-    .sample-meta  { font-size: 0.75rem; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 2px; }
-    .disfluency-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: .05em; padding: 1px 7px; border-radius: 4px; background: var(--tag-bg); color: var(--muted); margin-top: 5px; }
+    .sample-label { font-size: 0.85rem; font-weight: 600;text-align: left; }
+    .sample-meta  { font-size: 0.75rem; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 2px; text-align: left;}
+    .disfluency-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9.5px; letter-spacing: .05em; padding: 1px 7px; border-radius: 4px; background: var(--tag-bg); color: var(--muted); margin-top: 5px; text-align: left;}
 
     .model-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: .05em; padding: 2px 7px; border-radius: 4px; margin-bottom: 4px; background: var(--tag-bg); color: var(--muted); }
     .model-badge.ours { background: var(--accent-light); color: var(--accent); border: 1px solid #d4a099; font-weight: 600; }
@@ -73,8 +73,7 @@
     .spk-card { flex: 1; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px 18px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
     .spk-card strong { display: block; font-size: 13px; color: var(--text); margin-bottom: 4px; }
 
-    audio { width: 100%; min-width: 140px; max-width: 190px; height: 34px; accent-color: var(--accent); display: block; margin: 0 auto; }
-
+    audio { width: 100%; height: 34px; accent-color: var(--accent); display: block; }
     .divider { border: none; border-top: 1.5px solid var(--border); margin: 0 24px 64px; }
 
     .section-tabs { display: flex; gap: 10px; max-width: 1160px; margin: 0 auto 32px; padding: 0 24px; flex-wrap: wrap; }
@@ -359,10 +358,10 @@ const SD_SAMPLES = [
 //  factor: m20 | m10 | 0 | p10 | p20
 // ═══════════════════════════════════════════
 const VTL_SAMPLES = [
-  { n:1, src:'F', label:'Sample 1', meta: 'F' },
-  { n:2, src:'F', label:'Sample 1', meta:'F' },
-  { n:3, src:'M', label:'Sample 3', meta:'M' },
-  { n:4, src:'M', label:'Sample 4', meta:'M' },
+  { n:1, src:'F', label:'# 1', meta: 'F' },
+  { n:2, src:'F', label:'# 2', meta:'F' },
+  { n:3, src:'M', label:'# 3', meta:'M' },
+  { n:4, src:'M', label:'# 4', meta:'M' },
 ];
 
 // ═══════════════════════════════════════════
@@ -372,9 +371,8 @@ const VTL_SAMPLES = [
 //  ratio: A100 | A75B25 | A50B50 | A25B75 | B100
 // ═══════════════════════════════════════════
 const INTERP_SAMPLES = [
-  { n:1, label:'Sample 1', meta:'source utterance 1' },
-  { n:2, label:'Sample 2', meta:'source utterance 2' },
-  { n:3, label:'Sample 3', meta:'source utterance 3' },
+  { n:1, src:'F', label:'# 1', meta:'F' },
+  { n:2, src:'M', label:'# 2', meta:'M' },
 ];
 
 // ═══════════════════════════════════════════
@@ -401,9 +399,9 @@ const paths = {
     if (factor === 'original') return `final_files/vtl/${n}_original.wav`;
     return `final_files/vtl/${n}_${src}_${factor}.wav`;
   },
-  interp(n, ratio) {
-    if (ratio === 'original') return `final_files/interp/${n}_original.wav`;
-    return `final_files/interp/${n}_${ratio}.wav`;
+  interp(n, src, ratio) {
+    if (ratio === 'original') return `final_files/blend/original_${n}.wav`;
+    return `final_files/blend/${n}_${src}_${ratio}.wav`;
   },
 };
 
@@ -413,7 +411,11 @@ const paths = {
 const MODELS = ['knnvc', 'emo', 'ddspqbe', 'ours'];
 
 function au(src) {
-  return `<audio controls src="${src}"></audio>`;
+  return `<div style="width:100%; display:table;">
+    <div style="display:table-cell; text-align:center;">
+      <audio controls src="${src}" style="width:170px; height:34px; align-content: center"></audio>
+    </div>
+  </div>`;
 }
 
 function renderPair(s, pfn) {
@@ -429,7 +431,7 @@ function renderPair(s, pfn) {
            <div class="sample-label">${s.label}</div>
            <div class="sample-meta">${s.meta}</div>
            <span class="disfluency-tag">${s.type}</span>
-           <div style="margin-top:8px">${srcAudio}</div>
+           <div style="margin-top:8px; text-align:center;">${srcAudio}</div>
          </td>`
       : '';
     const modelCells = MODELS.map(m => `<td>${au(pfn(s.n, s.src, r.tgtCode, m))}</td>`).join('');
@@ -468,9 +470,9 @@ function renderInterpRow(s) {
   const srcCell = `<td class="src-cell" style="border-bottom:1px solid var(--border);">
     <div class="sample-label">${s.label}</div>
     <div class="sample-meta">${s.meta}</div>
-    <div style="margin-top:8px">${au(paths.interp(s.n, 'original'))}</div>
+    <div style="margin-top:8px">${au(paths.interp(s.n, s.src, 'original'))}</div>
   </td>`;
-  const ratioCells = INTERP_RATIOS.map(r => `<td>${au(paths.interp(s.n, r))}</td>`).join('');
+  const ratioCells = INTERP_RATIOS.map(r => `<td>${au(paths.interp(s.n, s.src, r))}</td>`).join('');
   return `<tr>${srcCell}${ratioCells}</tr>
 <tr class="spacer-row"><td colspan="6" style="height:10px; background:var(--bg); border:none; padding:0;"></td></tr>`;
 }
