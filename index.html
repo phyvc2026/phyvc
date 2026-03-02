@@ -121,7 +121,7 @@
 <div class="samples-wrap" id="section-stutter">
   <p class="section-title">Experiment 01</p>
   <h2>Stuttering Speech</h2>
-  <p class="section-desc">From SEP-28k and FluencyBank datasets &nbsp;·&nbsp; Each source utterance is anonymised to a female and a male voice &nbsp;·&nbsp; Dysfluencies and their severity should be preserved.</p>
+  <p class="section-desc">Source utterances from SEP-28k and FluencyBank datasets &nbsp;·&nbsp; Each one is anonymised to a female and a male voice &nbsp;·&nbsp; Dysfluencies and their severity should be preserved.</p>
   <p class="section-desc">Select a condition below.</p>
   <div class="tabs">
     <button class="tab active" onclick="filterTable('stutter','all',this)">All</button>
@@ -152,13 +152,14 @@
 <div class="samples-wrap" id="section-elderly">
   <p class="section-title">Experiment 02</p>
   <h2>Elderly Speech</h2>
+    <p class="section-desc">Source utterances from ADReSSo dataset &nbsp;·&nbsp; Vocal tremor, reduced articulatory precision, and dysfluencies should be preserved.</p>
   <p class="section-desc">Select a condition below.</p>
   <div class="tabs" style="margin-bottom:12px;">
     <button class="tab active" onclick="showElderlySubset('dementia', this)">Dementia</button>
     <button class="tab" onclick="showElderlySubset('healthy', this)">Healthy Elderly</button>
   </div>
   <div id="elderly-sub-dementia">
-    <p class="section-desc">From ADReSSo dataset &nbsp;·&nbsp; Vocal tremor, reduced articulatory precision, and dysfluencies should be preserved.</p>
+      <p class="section-desc">Dementia diagnosed elderly speakers.</p>
     <div class="tabs">
       <button class="tab active" onclick="filterTable('dementia','all',this)">All</button>
       <button class="tab" onclick="filterTable('dementia','mild',this)">Mild</button>
@@ -179,7 +180,7 @@
     </table>
   </div>
   <div id="elderly-sub-healthy" style="display:none">
-    <p class="section-desc">From ADReSSo dataset &nbsp;·&nbsp; Healthy elderly speakers &nbsp;·&nbsp; Vocal tremor and reduced articulatory precision should be preserved.</p>
+    <p class="section-desc">Healthy elderly speakers.</p>
     <table class="audio-table" id="table-elderly">
       <thead>
         <tr>
@@ -202,7 +203,7 @@
 <div class="samples-wrap" id="section-sd">
   <p class="section-title">Experiment 03</p>
   <h2>Standard Speech (not Elderly or Pathological)</h2>
-  <p class="section-desc">Healthy young speakers from ESD and LibriSpeech datasets &nbsp;·&nbsp; No pathology should be introduced.</p>
+  <p class="section-desc">Source utterances from healthy young speakers from ESD and LibriSpeech datasets &nbsp;·&nbsp; No pathology should be introduced.</p>
   <table class="audio-table" id="table-sd">
     <thead>
       <tr>
@@ -266,7 +267,7 @@
 
   <!-- ── Speaker Interpolation sub-panel ── -->
   <div id="vtl-sub-interpolation" style="display:none">
-      <p class="section-desc">A first demonstration that the physics parameters provide an interpretable axis for continuous identity variation &nbsp;·&nbsp; Speaker A and Speaker B vocal tract profiles are blended at five ratios while source content remains fixed &nbsp;·&nbsp; Listen for smooth transitions in resonance and perceived speaker size.</p>
+      <p class="section-desc">A first demonstration that the physics parameters provide an interpretable axis for <b><i>continuous identity variation</i></b> &nbsp;·&nbsp; Speaker A and Speaker B vocal tract profiles are blended at five ratios while source content remains fixed &nbsp;·&nbsp; Listen for smooth transitions in resonance and perceived speaker size.</p>
     <div class="spk-info">
       <div class="spk-card">
         <strong>Speaker A</strong>
